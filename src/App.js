@@ -6,21 +6,12 @@ import CardContent from '@mui/material/CardContent';
 import { Box } from '@mui/system'
 
 function App() {
-  const [id, setID] = useState(Date.now)
+  // const [id, setID] = useState(Date.now)
   const todoNameRef = useRef();
   const todoDateRef = useRef();
   const [todos, setTodos] = useState([]);
 
-  const TodoLogs = 'todoApp.tods'
-
-  useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem(TodoLogs))
-    if (storedTodos) setTodos(storedTodos)
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem(TodoLogs, JSON.stringify(todos))
-  }, [todos])
+  const TodoLogs = 'Todolist';
 
   function toggleTodo(id) {
     const newTodos = [...todos]
@@ -37,7 +28,7 @@ function App() {
     if (name === '' || date === '') return
     setTodos(prevTodos => {
       return [...prevTodos, {
-        id: id,
+        id: Date.now(),
         date: date,
         name: name,
         complete: false
@@ -51,7 +42,14 @@ function App() {
     const newTodos = todos.filter(todo => !todo.complete)
     setTodos(newTodos)
   }
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem(TodoLogs))
+    if (storedTodos) setTodos(storedTodos)
+  }, [])
 
+  useEffect(() => {
+    localStorage.setItem(TodoLogs, JSON.stringify(todos))
+  }, [todos])
   return (
     <div class="row align-items-start">
       <Card sx={{ maxWidth: 700 }} class='col'>
@@ -66,7 +64,7 @@ function App() {
           <div class="form-control text-center"><button class="btn btn-success" onClick={handleAddTodo}>Save</button> &nbsp; <button class="btn btn-danger" onClick={handleClearTodos}>Clear</button></div>
         </div>
       </Card>
-      <Card sx={{ maxWidth: 700 }} class='col'>
+      {/* <Card sx={{ maxWidth: 700 }} class='col'>
         <div class="form-control">
           <div class="col-12 text-center">My Thoughts</div>
           <input class="form-control" ref={todoNameRef} type="text" placeholder="Add Thoughts" />
@@ -77,8 +75,8 @@ function App() {
           </div>
           <div class="form-control text-center"><button class="btn btn-success" onClick={handleAddTodo}>Save</button> &nbsp; <button class="btn btn-danger" onClick={handleClearTodos}>Clear</button></div>
         </div>
-      </Card>
-    </div>
+      </Card> */}
+    </div >
   );
 }
 
